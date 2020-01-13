@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Training to find the beat</string>
+    <string name="app_title">Train to find the beat!</string>
+    <string name="app_description">We\'re here to help you find the beat in popular dance genres!</string>
+    <string name="quiz_statement">To test yourself, pick a genre: </string>
+    <string name="train_statement">To do some training, pick a genre: </string>
+    <string name="salsa">Salsa</string>
+    <string name="milonga">Milonga</string>
+    <string name="bachata">Bachata</string>
+    <string name="tango_milonga">Tango and Milonga</string>
+    <string name="progress">Let\'s see my progress so far</string>
+
+</resources>
