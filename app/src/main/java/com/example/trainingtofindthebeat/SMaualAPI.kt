@@ -10,10 +10,9 @@ object SManualAPI {
     val key1 = "q"
     val val1 = "Salsa Nation"
     val key2 = "type"
-    val val2 = "Playlist"
-    val key3 = "Bearer"
-    private val val3 =
-        "BQBjuWwH9KmK5N7f71xqpBFIqPgaPuF4LiA7CHtFrplmArBmlpqH3p-dAAe68Sk9_fsW9WBSybTJVvVUnIpKS1g7FtHLxILUVkxqNxnJfh7KY1nIaELlVI6dJmWMESHZKei_xpjadvL7q0m3xCUXFd41B3WOi7PzFIO5uQjhog"
+    val val2 = "playlist"
+    val val3 =
+        "BQAPemIGR-TGpfafOoVHIQ388s0dkN3Px41_VJ8sqmLfg36x1JqVx4uOBbgVcZIPJndvCifY3ajaqdCSjg8UMNF3qO3ejVscTJwhEmaGGQ68BBbeBd6-zLErYqM-2f5EnbqXukVyj00IxpTbPzgJmO78n0dTBd61lJksTjXYCQ"
 
     fun getPlaylistId(): String {
         var requestUrl = url;
@@ -26,18 +25,20 @@ object SManualAPI {
         requestUrl += "=";
         requestUrl += val2;
         val headerMap = mutableMapOf<String, String>();
-        headerMap.put("Authorization", val3);
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
+        headerMap.put("Authorization", "Bearer BQAPemIGR-TGpfafOoVHIQ388s0dkN3Px41_VJ8sqmLfg36x1JqVx4uOBbgVcZIPJndvCifY3ajaqdCSjg8UMNF3qO3ejVscTJwhEmaGGQ68BBbeBd6-zLErYqM-2f5EnbqXukVyj00IxpTbPzgJmO78n0dTBd61lJksTjXYCQ");
 
         var finished = false;
-        var returnStatement =
+        var owner:String = "BLARG"
 
         runBlocking {
             GlobalScope.launch {
-                val temp = khttp.get(url = requestUrl, headers = headerMap);
-                val owner = temp.jsonObject.getJSONArray("items").getJSONObject(0)
-                    .getJSONObject("owner").getString("display_name");
+//                val temp = khttp.get(url = requestUrl, headers = headerMap);
+
+//                owner = khttp.get(url = requestUrl, headers = headerMap).jsonObject.getJSONObject("playlists").getJSONArray("items")[0].getJSONObject("owner")
+//                    .getString("display_name");
+                    owner = khttp.get(url = requestUrl, headers = headerMap).jsonObject.toString()
                 finished = true;
 
             }
