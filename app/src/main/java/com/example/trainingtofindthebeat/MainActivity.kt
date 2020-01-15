@@ -101,10 +101,11 @@ class MainActivity : AppCompatActivity() {
     fun bufferAPI(){
         var finished = false;
         runBlocking {
-//            val response = SManualAPI.getPlaylistId()
-//            val response = SManualAPI.getTrackList()
-//            val actualText = response.getPlaylistId()
-            val response = SManualAPI.getTrackAA()
+            var response = SManualAPI.getPlaylistId()
+//             response = SManualAPI.getTrackList()
+//             response = SManualAPI.getTrackbeat()
+            response = SManualAPI.getTrackAA()[0]
+
             progress_button.setText(response)
             finished = true
         }

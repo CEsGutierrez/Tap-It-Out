@@ -7,8 +7,8 @@ import java.util.*
 
 object SManualAPI {
 
-    val token =
-    "Bearer BQB14kLa4n1nzQJglCSDYEQUKjduZOXKkVeDsLrUeQ__HtNKZxZjIWuRYdC2aAoU4W0CrOsT_jVQEDJPopOmwb-erBHXVrFVoyDnWmIH7Ttfs2nPgtjbzi3Jx8gqCkJw4lYGW-mEsgG6O7klDUnfqxE2sqA-lKQxrqIXKj7V-Q"
+//    val token =
+//    "Bearer BQB14kLa4n1nzQJglCSDYEQUKjduZOXKkVeDsLrUeQ__HtNKZxZjIWuRYdC2aAoU4W0CrOsT_jVQEDJPopOmwb-erBHXVrFVoyDnWmIH7Ttfs2nPgtjbzi3Jx8gqCkJw4lYGW-mEsgG6O7klDUnfqxE2sqA-lKQxrqIXKj7V-Q"
 
 
     fun getPlaylistId(): String { // I ACTUALLY WORK
@@ -21,7 +21,7 @@ object SManualAPI {
             requestUrl += "type";
             requestUrl += "=";
             requestUrl += "playlist";
-            val token = "Bearer BQBlpVLd9Kf9uvPB_znDN2uRWg2NPZO8Z7-aRCaG3d8ugCXk48cqFwfCm42uLq7S30q2ILf7ETBZZViTIQWxI3eDslyjV1X6DRIk7kF55GimYctQcksXntiVf41df1GIVGn9PYSGMoW-kPqkMCMQnne557CaqeOuT0OOc4L29A"
+            val token = "Bearer BQAf3gK2DQqj0PbKv8ALMlwOi73SU9bnaT-JGa3KA40PX8Yf6hY5hh0Njznkz-oMqbB6OawsdaDgLjy2NXX9kYUO1gNE_OJGQn9ajEK7brvZiZ5dND_F6fxIxkix_YsLMHeH5MLKjn7pFagXkclvD77nZ37IXTRVjwzu8_z0ZA"
             val headerMap = mutableMapOf<String, String>();
             headerMap.put("Accept", "application/json");
             headerMap.put("Content-Type", "application/json");
@@ -76,7 +76,7 @@ object SManualAPI {
         // generate a random number between 1 and 100
 
         val token =
-            "Bearer BQBlpVLd9Kf9uvPB_znDN2uRWg2NPZO8Z7-aRCaG3d8ugCXk48cqFwfCm42uLq7S30q2ILf7ETBZZViTIQWxI3eDslyjV1X6DRIk7kF55GimYctQcksXntiVf41df1GIVGn9PYSGMoW-kPqkMCMQnne557CaqeOuT0OOc4L29A"
+            "Bearer BQAf3gK2DQqj0PbKv8ALMlwOi73SU9bnaT-JGa3KA40PX8Yf6hY5hh0Njznkz-oMqbB6OawsdaDgLjy2NXX9kYUO1gNE_OJGQn9ajEK7brvZiZ5dND_F6fxIxkix_YsLMHeH5MLKjn7pFagXkclvD77nZ37IXTRVjwzu8_z0ZA"
         val headerMap = mutableMapOf<String, String>();
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
@@ -105,8 +105,9 @@ object SManualAPI {
     }
 
 
-//    fun getTrackAA(): ArrayList<Any> { // I AM EXPERIMENT, who the hell knows?
-        fun getTrackAA(): String { // I AM EXPERIMENT, who the hell knows?
+
+        fun getTrackbeat(): String { // I WORK, I CAN GET A SPECIFIC BEAT (by index number) for a
+            // track
 
         var track_id = "6iLyEBNStoAemStXqGY7qP"
         var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
@@ -116,7 +117,7 @@ object SManualAPI {
 
         var firstStart:String = ""
 
-        val token = "Bearer BQBlpVLd9Kf9uvPB_znDN2uRWg2NPZO8Z7-aRCaG3d8ugCXk48cqFwfCm42uLq7S30q2ILf7ETBZZViTIQWxI3eDslyjV1X6DRIk7kF55GimYctQcksXntiVf41df1GIVGn9PYSGMoW-kPqkMCMQnne557CaqeOuT0OOc4L29A"
+        val token = "Bearer BQAf3gK2DQqj0PbKv8ALMlwOi73SU9bnaT-JGa3KA40PX8Yf6hY5hh0Njznkz-oMqbB6OawsdaDgLjy2NXX9kYUO1gNE_OJGQn9ajEK7brvZiZ5dND_F6fxIxkix_YsLMHeH5MLKjn7pFagXkclvD77nZ37IXTRVjwzu8_z0ZA"
         val headerMap = mutableMapOf<String, String>();
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
@@ -144,8 +145,44 @@ object SManualAPI {
             Thread.sleep(500);
         }
         return firstStart;
+    }
+
+    fun getTrackAA(): ArrayList<String> { // I WORK, I CAN GET A SPECIFIC BEAT (by index number)
+        // for a
+        // track
+
+        var track_id = "6iLyEBNStoAemStXqGY7qP"
+        var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
+        requestUrl += track_id;
+
+        var beats = arrayListOf<String>()
 
 
+        val token = "Bearer BQAf3gK2DQqj0PbKv8ALMlwOi73SU9bnaT-JGa3KA40PX8Yf6hY5hh0Njznkz-oMqbB6OawsdaDgLjy2NXX9kYUO1gNE_OJGQn9ajEK7brvZiZ5dND_F6fxIxkix_YsLMHeH5MLKjn7pFagXkclvD77nZ37IXTRVjwzu8_z0ZA"
+        val headerMap = mutableMapOf<String, String>();
+        headerMap.put("Accept", "application/json");
+        headerMap.put("Content-Type", "application/json");
+        headerMap.put("Authorization", token);
+
+        var finished = false;
+
+        runBlocking {
+            GlobalScope.launch {
+                val temp = khttp.get(url = requestUrl, headers = headerMap)
+
+//                firstStart = temp.jsonObject.toString()
+                val temptoo = temp.jsonObject.getJSONArray("beats").toString()
+                beats.add(0, temptoo)
+
+//                track = temp.jsonObject.getJSONArray("items").getJSONObject(2).getJSONObject("track").getString("id");
+
+                finished = true;
+            }
+        }
+        while (!finished) {
+            Thread.sleep(500);
+        }
+        return beats;
     }
 
     //Track-info-specific values needed
