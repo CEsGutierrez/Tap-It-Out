@@ -1,12 +1,12 @@
 package com.example.trainingtofindthebeat
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.trainingtofindthebeat.SMaualAPI.getSalsaPlaylist
-import com.example.trainingtofindthebeat.SMaualAPI.getSalsaSong
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.runBlocking
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity() {
     val bachataScores = ArrayList<Any>()
     val tangoMilongaScores = ArrayList<Any>()
 
+    // populates an array of the salsa songs already trained on
+
     fun getSalsaSongs() {
         getSalsaScores()
         if (salsaScores.size == 0)
@@ -95,14 +97,33 @@ class MainActivity : AppCompatActivity() {
     val tangoMilongaSongs = ArrayList<Any>()
 
 
+
+    fun bufferAPI(){
+        var finished = false;
+        runBlocking {
+            val response = SManualAPI.getPlaylistId()
+//            val actualText = response.getPlaylistId()
+            progress_button.setText(response)
+            finished = true
+        }
+        while (!finished) {
+            Thread.sleep(500);
+        }
+
+    }
+
+
+
     private fun setupListeners() {
 
         salsa_train.setOnClickListener {
-            getSalsaScores()
-            // salsaScores is now populated
-            getSalsaSongs()
-            //salsaSongs is now populated
-            getSalsaSong()
+            bufferAPI()
+//            getSalsaScores()
+////            progress_button.setText("There's nothing here")
+//            // salsaScores is now populated
+//            getSalsaSongs()
+//            //salsaSongs is now populated
+////            getSalsaTrack()
 
         }
 

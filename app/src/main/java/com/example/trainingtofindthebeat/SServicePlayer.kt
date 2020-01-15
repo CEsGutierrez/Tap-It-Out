@@ -1,6 +1,5 @@
 package com.example.trainingtofindthebeat
 
-import android.content.AsyncQueryHandler
 import android.content.Context
 import android.util.Log
 import com.spotify.android.appremote.api.ConnectionParams
@@ -33,6 +32,10 @@ object SServicePlayer {
             }
         }
         SpotifyAppRemote.connect(context, connectionParams, connectionListener)
+    }
+
+    fun disconnect() {
+        SpotifyAppRemote.disconnect(spotifyAppRemote)
     }
 
 
