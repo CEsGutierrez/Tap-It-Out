@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.runBlocking
 
 
 class MainActivity : AppCompatActivity() {
+
+//    var THIS_IS_A_TEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         connect_button.setOnClickListener {
             showMainButtons()
             hideConnectButton()
+            SManualAPI.getToken()
         }
 
         //sets up all the other buttons' listeners which will determine the functional parts of the app
@@ -88,6 +90,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun pickSalsaSong():String {
+        if (salsaScores.size == 0) {
+            val length = SManualAPI.SALSA_TRACKS.size
+            val random = SManualAPI.SALSA_TRACKS.get((0..length).random())
+            return random
+        }
+        else
+            for()
+
+
+
+
+
+
+        return ""
+    }
+
+
     fun getBachataSongs() {}
     fun getTangoMilongaSongs() {}
 
@@ -98,30 +118,15 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun bufferAPI(){
-        var finished = false;
-        runBlocking {
-            var response = SManualAPI.getPlaylistId()
-//             response = SManualAPI.getTrackList()
-//             response = SManualAPI.getTrackbeat()
-            response = SManualAPI.getTrackAA()[0]
-
-            progress_button.setText(response)
-            finished = true
-        }
-        while (!finished) {
-            Thread.sleep(500);
-        }
-
-    }
-
-
 
     private fun setupListeners() {
 
         salsa_train.setOnClickListener {
-            bufferAPI()
-//            getSalsaScores()
+            SManualAPI.getPlaylistId()
+            SManualAPI.getTrackList()
+            pickSalsaSong()
+            progress_button.setText(SManualAPI.getTrackAA("6JqpFboOH2bq9pzaYbkKBn").toString())
+            //            getSalsaScores()
 ////            progress_button.setText("There's nothing here")
 //            // salsaScores is now populated
 //            getSalsaSongs()

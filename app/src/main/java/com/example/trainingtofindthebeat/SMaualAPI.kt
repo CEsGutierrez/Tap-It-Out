@@ -8,67 +8,88 @@ import java.util.*
 
 object SManualAPI {
 
-//    val token =
-//    "Bearer BQB14kLa4n1nzQJglCSDYEQUKjduZOXKkVeDsLrUeQ__HtNKZxZjIWuRYdC2aAoU4W0CrOsT_jVQEDJPopOmwb-erBHXVrFVoyDnWmIH7Ttfs2nPgtjbzi3Jx8gqCkJw4lYGW-mEsgG6O7klDUnfqxE2sqA-lKQxrqIXKj7V-Q"
+    var BEARER_TOKEN = "" // Used as a variable for all other API calls. Assignment is triggered
+    // through getToken function based on Connect Button onClickListener
+
+    // will hold Spotify-owned playlist ID which will be the "approved" playlist
+    var SALSA_PLAYLIST_ID = ""
+    var BACHATA_PLAYLIST_ID = ""
+    var TANGO_MILONGA_PLAYLIST_ID = ""
+
+    // will hold curated track IDs for tracks from approved playlist
+    var SALSA_TRACKS = arrayListOf<String>()
+    var BACHATA_TRACKS = arrayListOf<String>()
+    var TANGO_MILONGA_TRACKS = arrayListOf<String>()
 
 
-    fun getPlaylistId(): String { // I ACTUALLY WORK
-        var requestUrl = "https://api.spotify.com/v1/search";
-            requestUrl += "?";
-            requestUrl += "q";
-            requestUrl += "=";
-            requestUrl += "Salsa Nation";
-            requestUrl += "&";
-            requestUrl += "type";
-            requestUrl += "=";
-            requestUrl += "playlist";
-            val token = "Bearer BQBykZO6_dFlbvriN8x_YF3OyQCnoRJ-n6NTH02pZC0Tz-skUljAv2f1xBxbpIWpCqa0SvuR7DsfqXFjgoBIVaKRQBx9495-DgzgXK-11gqamXUJIGRqlC6vSFFdJfvTf4a69kSmOHuvaNQPhmAVbqkvhY_vXG_FK8eUAsXNWQ"
-            val headerMap = mutableMapOf<String, String>();
-            headerMap.put("Accept", "application/json");
-            headerMap.put("Content-Type", "application/json");
-            headerMap.put("Authorization", token);
+    fun getToken() {
 
-            var finished = false;
-            var owner:String = "BLARG"
-            var playlistID = "Boo"
+        val id = BuildConfig.TOKEN_IDENTIFICATION // encoded client_id and client_secrets from
+        // Spotify
 
-            runBlocking {
-                GlobalScope.launch {
-                    val temp = khttp.get(url = requestUrl, headers = headerMap)
+        var response = "" // Used to parse response for just key
 
-//    i = 0
- //   until "owner.downcase == "spotify" i+= 1
- //   owner = temp.jsonObject.getJSONObject("playlists").getJSONArray("items").getJSONObject(i).getJSONObject("owner").getString("display_name");
 
-// SO although I'd love to do this as an "until" loop, I think it's a little tricker with parsing
-// since string interpolation is frowned upon in this case and I can't easily turn i into an
-// integer. So...that means I'm going to take the entire "items" collection into an actual array
-// list, and then iterate through it with a BREAK point should the owner ever match "spotify" at
-// which point, I'll let that ID be the last one. Like, I'm thinking through the loop to
-// continuously be reassigning a variable ID so that when the loop breaks, I don't have to think
-// about grabbing anything, it'll just be the last value that was there.
+        var requestUrl = "https://accounts.spotify.com/api/token?grant_type=client_credentials"
+        val headerMap = mutableMapOf<String, String>();
+        headerMap.put("Authorization", "Basic $id"); // Used to compose call
 
-//                    playlistID = temp.jsonObject.toString()
+        var finished = false; // Used for pacing
 
-                    playlistID = temp.jsonObject.getJSONObject("playlists").getJSONArray("items")
-                        .getJSONObject(0).getString("id")
+        runBlocking {
+            GlobalScope.launch {
+                val temp = khttp.post(url = requestUrl, headers = headerMap)
+                response = temp.jsonObject.getString("access_token")
+                BEARER_TOKEN = response
+                finished = true;
+            }
+        }
+        while (!finished) {
+            Thread.sleep(500); // forces pause while waiting for BEARER TOKEN assignment, I think
+        }
+    }
 
-//                    owner = temp.jsonObject.getJSONObject("playlists").getJSONArray("items").getJSONObject(0).getJSONObject("owner").getString("display_name");
 
-                    finished = true;
+    fun getPlaylistId() { // gets the playlist ID for "salsa nation" related playlist
+        // curated by Spotify
 
+        val searchKeyword = "Salsa Nation"
+        val idealOwner = "spotify"
+
+        var requestUrl = "https://api.spotify.com/v1/search?q=$searchKeyword&type=playlist"
+        val token = "Bearer $BEARER_TOKEN"
+        val headerMap = mutableMapOf<String, String>();
+        headerMap.put("Accept", "application/json");
+        headerMap.put("Content-Type", "application/json");
+        headerMap.put("Authorization", token);
+
+        var finished = false;
+        var playlistID = ""
+
+        runBlocking {
+            GlobalScope.launch {
+                val temp = khttp.get(url = requestUrl, headers = headerMap)
+                val playlistArray = temp.jsonObject.getJSONObject("playlists").getJSONArray("items")
+
+                // iterates over array to find where a playlist is curated by "spotify" then returns that ID and exist the loop
+                for (i in 0 until playlistArray.length()) {
+                    val item = playlistArray.getJSONObject(i).getJSONObject("owner").getString("display_name").toLowerCase()
+                    if (item == idealOwner)
+                        playlistID = playlistArray.getJSONObject(i).getString("id")
+                        break
+                    }
+                finished = true;
                 }
-
             }
             while (!finished) {
                 Thread.sleep(500);
             }
-            return playlistID;
+            SALSA_PLAYLIST_ID = playlistID
     }
 
-    fun getTrackList(): String { // I TOTES WORK!
+    fun getTrackList() {
 
-        var playlist_id = "37i9dQZF1DX7cmFV9rWM0u"
+        var playlist_id = SALSA_PLAYLIST_ID
 
         var requestUrl = "https://api.spotify.com/v1/playlists/";
         requestUrl += playlist_id;
@@ -77,85 +98,42 @@ object SManualAPI {
         // generate a random number between 1 and 100
 
         val token =
-            "Bearer BQDV9HrTCO3AkiuHQzO7ZHlgdpCNPuiulDQu6N0OwGESdEXpKr5yc-FkvS_6DXNeNKcUkMG_CZ8tX40zpfhC3rdMqOLKKMDVr3AEJw42lTnJ-DBszJzWOAjbG50ZlCCicbNMbvgIQK9NvmYIRg8WKFTaD0QK0ffB6Tfhx7n_SQ"
+            "Bearer $BEARER_TOKEN"
         val headerMap = mutableMapOf<String, String>();
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
         headerMap.put("Authorization", token);
 
         var finished = false;
-        var track: String = "BLARG"
+        var tracks = arrayListOf<String>()
 
         runBlocking {
             GlobalScope.launch {
+
                 val temp = khttp.get(url = requestUrl, headers = headerMap)
-                track =
-                    temp.jsonObject.getJSONArray("items").getJSONObject(2).getJSONObject("track")
-                        .getString("id");
+                val arrayOfObjectfromApi = temp.jsonObject.getJSONArray("items")
+                        for (i in 0 until arrayOfObjectfromApi.length()) {
+                            val item = arrayOfObjectfromApi.getJSONObject(i).getJSONObject("track").getString("id")
+                            tracks.add(item)
+                        }
 
                 finished = true;
-
             }
-
         }
         while (!finished) {
             Thread.sleep(500);
         }
-        return track;
+        SALSA_TRACKS = tracks
 
     }
 
+    fun getTrackAA(track_id: String): ArrayList<String> {
 
-
-        fun getTrackbeat(): String { // I WORK, I CAN GET A SPECIFIC BEAT (by index number) for a
-            // track
-
-        var track_id = "6iLyEBNStoAemStXqGY7qP"
+        var track_id = track_id
         var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
         requestUrl += track_id;
 
-        var beats: Array<Objects>
-
-        var firstStart:String = ""
-
-        val token = "Bearer BQBykZO6_dFlbvriN8x_YF3OyQCnoRJ-n6NTH02pZC0Tz-skUljAv2f1xBxbpIWpCqa0SvuR7DsfqXFjgoBIVaKRQBx9495-DgzgXK-11gqamXUJIGRqlC6vSFFdJfvTf4a69kSmOHuvaNQPhmAVbqkvhY_vXG_FK8eUAsXNWQ"
-        val headerMap = mutableMapOf<String, String>();
-        headerMap.put("Accept", "application/json");
-        headerMap.put("Content-Type", "application/json");
-        headerMap.put("Authorization", token);
-
-        var finished = false;
-
-        runBlocking {
-            GlobalScope.launch {
-                val temp = khttp.get(url = requestUrl, headers = headerMap)
-
-//                firstStart = temp.jsonObject.toString()
-                firstStart = temp.jsonObject.getJSONArray("beats").getJSONObject(10).getDouble("start").toString()
-
-
-
-//                track = temp.jsonObject.getJSONArray("items").getJSONObject(2).getJSONObject("track").getString("id");
-
-                finished = true;
-
-            }
-
-        }
-        while (!finished) {
-            Thread.sleep(500);
-        }
-        return firstStart;
-    }
-
-    fun getTrackAA(): ArrayList<String> { // I WORK, I RETURN AN ARRAY OF BEAT STRINGS, YAAAAAAAS
-
-
-        var track_id = "6iLyEBNStoAemStXqGY7qP"
-        var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
-        requestUrl += track_id;
-
-        val token = "Bearer BQBykZO6_dFlbvriN8x_YF3OyQCnoRJ-n6NTH02pZC0Tz-skUljAv2f1xBxbpIWpCqa0SvuR7DsfqXFjgoBIVaKRQBx9495-DgzgXK-11gqamXUJIGRqlC6vSFFdJfvTf4a69kSmOHuvaNQPhmAVbqkvhY_vXG_FK8eUAsXNWQ"
+        val token = "Bearer $BEARER_TOKEN"
         val headerMap = mutableMapOf<String, String>();
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
@@ -173,7 +151,6 @@ object SManualAPI {
                     beatsArray.add(item.toString())
                 }
 
-
                 finished = true;
             }
         }
@@ -182,4 +159,5 @@ object SManualAPI {
         }
         return beatsArray;
     }
+
 }
