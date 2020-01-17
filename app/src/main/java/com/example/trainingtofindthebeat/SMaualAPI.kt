@@ -16,10 +16,13 @@ object SManualAPI {
     var BACHATA_PLAYLIST_ID = ""
     var TANGO_MILONGA_PLAYLIST_ID = ""
 
-    // will hold curated track IDs for tracks from approved playlist
+    // will hold randomized, curated track IDs for tracks from approved playlist. Randomization
+    // makes it easier to pick from these track collections later.
     var SALSA_TRACKS = arrayListOf<String>()
     var BACHATA_TRACKS = arrayListOf<String>()
     var TANGO_MILONGA_TRACKS = arrayListOf<String>()
+
+    var CURRENT_SALSA_TRACK = ""
 
 
     fun getToken() {
@@ -50,10 +53,10 @@ object SManualAPI {
     }
 
 
-    fun getPlaylistId() { // gets the playlist ID for "salsa nation" related playlist
+    fun getPlaylistId() { // gets the playlist ID for "salsa cubana" related playlist
         // curated by Spotify
 
-        val searchKeyword = "Salsa Nation"
+        val searchKeyword = "Salsa Cubana"
         val idealOwner = "spotify"
 
         var requestUrl = "https://api.spotify.com/v1/search?q=$searchKeyword&type=playlist"
@@ -95,8 +98,6 @@ object SManualAPI {
         requestUrl += playlist_id;
         requestUrl += "/tracks";
 
-        // generate a random number between 1 and 100
-
         val token =
             "Bearer $BEARER_TOKEN"
         val headerMap = mutableMapOf<String, String>();
@@ -114,7 +115,7 @@ object SManualAPI {
                 val arrayOfObjectfromApi = temp.jsonObject.getJSONArray("items")
                         for (i in 0 until arrayOfObjectfromApi.length()) {
                             val item = arrayOfObjectfromApi.getJSONObject(i).getJSONObject("track").getString("id")
-                            tracks.add(item)
+                            tracks.add(item).toString()
                         }
 
                 finished = true;
@@ -123,6 +124,7 @@ object SManualAPI {
         while (!finished) {
             Thread.sleep(500);
         }
+        tracks.shuffle()
         SALSA_TRACKS = tracks
 
     }
@@ -130,6 +132,7 @@ object SManualAPI {
     fun getTrackAA(track_id: String): ArrayList<String> {
 
         var track_id = track_id
+        CURRENT_SALSA_TRACK = track_id
         var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
         requestUrl += track_id;
 

@@ -53,68 +53,8 @@ class MainActivity : AppCompatActivity() {
         connect_button.visibility = View.INVISIBLE
     }
 
-    fun getSalsaScores() {
-        //gts the salsa scores from sharedpreferences
-        //assigns them to salsaScores
-    }
-    fun getBachataScores() {
-        //gts the bachata scores from sharedpreferences
-        //assigns them to bachataScores
-    }
-    fun getTangoMilScores() {
-        //gts the tango and milonga scores from sharedpreferences
-        //assigns them to tangoMilongaScores
-    }
-
-    val salsaScores = ArrayList<Any>()
-    val bachataScores = ArrayList<Any>()
-    val tangoMilongaScores = ArrayList<Any>()
-
-    // populates an array of the salsa songs already trained on
-
-    fun getSalsaSongs() {
-        getSalsaScores()
-        if (salsaScores.size == 0)
-            salsaSongs.add("")
-        else if (salsaScores.size == 1) {
-            var placeholder = ArrayList<Any>(salsaScores)
-            val onlySong = placeholder.get(0).toString()
-            salsaSongs.add(onlySong)
-        }
-        else {
-            var limit :Int = 3
-            salsaScores.forEachIndexed { index, element ->
-                if(index % limit == 0)
-                    salsaSongs.add(element.toString())
-            }
-        }
-    }
-
-    fun pickSalsaSong():String {
-        if (salsaScores.size == 0) {
-            val length = SManualAPI.SALSA_TRACKS.size
-            val random = SManualAPI.SALSA_TRACKS.get((0..length).random())
-            return random
-        }
-        else
-            for()
 
 
-
-
-
-
-        return ""
-    }
-
-
-    fun getBachataSongs() {}
-    fun getTangoMilongaSongs() {}
-
-
-    var salsaSongs = ArrayList<String>()
-    val bachataSongs = ArrayList<Any>()
-    val tangoMilongaSongs = ArrayList<Any>()
 
 
 
@@ -124,14 +64,9 @@ class MainActivity : AppCompatActivity() {
         salsa_train.setOnClickListener {
             SManualAPI.getPlaylistId()
             SManualAPI.getTrackList()
-            pickSalsaSong()
-            progress_button.setText(SManualAPI.getTrackAA("6JqpFboOH2bq9pzaYbkKBn").toString())
-            //            getSalsaScores()
-////            progress_button.setText("There's nothing here")
-//            // salsaScores is now populated
-//            getSalsaSongs()
-//            //salsaSongs is now populated
-////            getSalsaTrack()
+//            progress_button.setText(SManualAPI.getTrackAA(pickSalsaSong())
+//                .toString())
+            launchPlayer()
 
         }
 

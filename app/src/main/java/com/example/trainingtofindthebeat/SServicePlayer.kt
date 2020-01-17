@@ -11,6 +11,7 @@ object SServicePlayer {
     private const val REDIRECT_URI = "com.example.trainingtofindthebeat://"
 
     private var spotifyAppRemote: SpotifyAppRemote? = null
+
     private var connectionParams: ConnectionParams = ConnectionParams.Builder(CLIENT_ID)
         .setRedirectUri(REDIRECT_URI)
         .showAuthView(true)
@@ -34,9 +35,18 @@ object SServicePlayer {
         SpotifyAppRemote.connect(context, connectionParams, connectionListener)
     }
 
-    fun disconnect() {
-        SpotifyAppRemote.disconnect(spotifyAppRemote)
+     fun disconnect() {
+        spotifyAppRemote?.playerApi?.pause()
+         // TODO: figure out how to actually STOP what's going on here, not just pause it
+
+//        SpotifyAppRemote.disconnect(spotifyAppRemote)
     }
+
+
+    fun play(uri: String) {
+        spotifyAppRemote?.playerApi?.play(uri)
+    }
+
 
 
 }
