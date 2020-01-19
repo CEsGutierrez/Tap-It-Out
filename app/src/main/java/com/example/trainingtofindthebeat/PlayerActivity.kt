@@ -1,5 +1,7 @@
 package com.example.trainingtofindthebeat
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +11,7 @@ import java.util.*
 
 
 class PlayerActivity : AppCompatActivity() {
+
 
     var TIME_STAMP_LIST= arrayListOf<Int>()
     var START_TIME = 0
@@ -21,12 +24,24 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
         setupListeners()
+
     }
 
-//    override fun onStop() {
-//        super.onStop()
-//        SServicePlayer.disconnect()
-//    }
+
+    val standInArray = arrayListOf(0, 4000, 8000, 12000)
+
+
+    fun scaler() {
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 2f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 2f)
+
+        val animator = ObjectAnimator.ofPropertyValuesHolder(animation, scaleX, scaleY)
+
+        animator.repeatCount = 20
+        animator.repeatMode = ObjectAnimator.REVERSE
+        animator.start()
+
+    }
 
 
     fun setupListeners() {
@@ -35,10 +50,8 @@ class PlayerActivity : AppCompatActivity() {
             recordBETTER_START_TIME()
             CURRENT_SALSA_TRACK = ProgressActivity.pickSalsaSong()
             SServicePlayer.play("spotify:track:${SManualAPI.CURRENT_SALSA_TRACK}")
-
+            scaler()
         }
-
-
 
         stop_button.setOnClickListener {
             recordEND_TIME()
@@ -177,3 +190,5 @@ class PlayerActivity : AppCompatActivity() {
     }
 
 }
+
+

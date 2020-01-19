@@ -122,7 +122,7 @@ object SManualAPI {
             }
         }
         while (!finished) {
-            Thread.sleep(500);
+            ;
         }
         tracks.shuffle()
         SALSA_TRACKS = tracks
