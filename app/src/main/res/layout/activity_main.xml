@@ -84,77 +84,14 @@
             android:visibility="invisible"/>
 
         <Button
-            android:id="@+id/tango_train"
+            android:id="@+id/rumba_train"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/tango_milonga"
+            android:text="@string/rumba"
             android:visibility="invisible"/>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/quiz_selection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/quiz_statement"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:visibility="invisible"/>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="390dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_selection">
-
-        <Button
-            android:id="@+id/salsa_quiz"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/salsa"
-            android:visibility="invisible"/>
-
-        <Button
-            android:id="@+id/bachata_quiz"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/bachata"
-            android:visibility="invisible"/>
-
-        <Button
-            android:id="@+id/tango_quiz"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/tango_milonga"
-            android:visibility="invisible"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/progress_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/progress"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <Button
         android:id="@+id/connect_button"
@@ -164,7 +101,6 @@
         android:layout_marginTop="31dp"
         android:layout_marginEnd="16dp"
         android:text="Let's get started!"
-        app:layout_constraintBottom_toTopOf="@+id/quiz_selection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"

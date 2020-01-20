@@ -7,7 +7,6 @@
     <string name="salsa">Salsa</string>
     <string name="milonga">Milonga</string>
     <string name="bachata">Bachata</string>
-    <string name="tango_milonga">Tango and Milonga</string>
-    <string name="progress">Let\'s see my progress so far</string>
+    <string name="rumba">Rumba</string>
 
 </resources>

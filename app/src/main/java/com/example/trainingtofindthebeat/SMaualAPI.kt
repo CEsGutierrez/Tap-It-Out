@@ -11,18 +11,25 @@ object SManualAPI {
     var BEARER_TOKEN = "" // Used as a variable for all other API calls. Assignment is triggered
     // through getToken function based on Connect Button onClickListener
 
+    var GENRE = ""
+
     // will hold Spotify-owned playlist ID which will be the "approved" playlist
     var SALSA_PLAYLIST_ID = ""
     var BACHATA_PLAYLIST_ID = ""
-    var TANGO_MILONGA_PLAYLIST_ID = ""
+    var RUMBA_PLAYLIST_ID = ""
+
 
     // will hold randomized, curated track IDs for tracks from approved playlist. Randomization
     // makes it easier to pick from these track collections later.
     var SALSA_TRACKS = arrayListOf<String>()
     var BACHATA_TRACKS = arrayListOf<String>()
-    var TANGO_MILONGA_TRACKS = arrayListOf<String>()
+    var RUMBA_TRACKS = arrayListOf<String>()
 
     var CURRENT_SALSA_TRACK = ""
+    var CURRENT_BACHATA_TRACK = ""
+    var CURRENT_RUMBA_TRACK = ""
+
+
     var TEMPO:Long = 0
 
 
@@ -53,11 +60,10 @@ object SManualAPI {
         }
     }
 
+    fun getPlaylistId(searchKeyword: String): String { // gets the playlist ID for "whatever
+        // playlist password was passed into it "
 
-    fun getPlaylistId() { // gets the playlist ID for "salsa cubana" related playlist
-        // curated by Spotify
-
-        val searchKeyword = "Salsa Cubana"
+        val searchKeyword = searchKeyword
         val idealOwner = "spotify"
 
         var requestUrl = "https://api.spotify.com/v1/search?q=$searchKeyword&type=playlist"
@@ -88,12 +94,12 @@ object SManualAPI {
             while (!finished) {
                 Thread.sleep(500);
             }
-            SALSA_PLAYLIST_ID = playlistID
+        return playlistID
     }
 
-    fun getTrackList() {
+    fun getTrackList(playlist_id: String): ArrayList<String> {
 
-        var playlist_id = SALSA_PLAYLIST_ID
+        var playlist_id = playlist_id
 
         var requestUrl = "https://api.spotify.com/v1/playlists/";
         requestUrl += playlist_id;
@@ -123,15 +129,15 @@ object SManualAPI {
             }
         }
         while (!finished) {
-            ;
         }
         tracks.shuffle()
-        SALSA_TRACKS = tracks
+        return tracks
+
     }
 
-    fun getTrackTempo() {
+    fun getTrackTempo(track_id: String) {
 
-        var track_id =CURRENT_SALSA_TRACK
+        var track_id = track_id
         var requestUrl = "https://api.spotify.com/v1/audio-features/"
         requestUrl += track_id;
 
@@ -150,34 +156,19 @@ object SManualAPI {
                 val temp = get(url = requestUrl, headers = headerMap)
                 val tempo = temp.jsonObject.getString("tempo")
                 finished = true;
-                println("I am the raw tempo, am I really here? ")
-                println("I am the raw tempo, am I really here? ")
-                println("I am the raw tempo, am I really here? ")
-                println("$tempo")
                 bpm = 60000/(tempo.toFloat()).toInt().toLong()
-                println("$bpm")
                 val supertemp = bpm::class.java.toString()
-
-                println("$supertemp")
                 TEMPO = bpm
             }
         }
         while (!finished) {
             Thread.sleep(500);
         }
-        println("*******I'm the tempo")
-        println("*******I'm the tempo")
-        println("*******I'm the tempo")
-        println("*******I'm the tempo")
-        println("*******I'm the tempo")
-        println("TEMPO = $bpm")
-        /*EMPO = bpm*/
     }
 
+    fun getTrackAA(track_id: String): ArrayList<String> {
 
-    fun getTrackAA(): ArrayList<String> {
-
-        var track_id = CURRENT_SALSA_TRACK
+        var track_id = track_id
         var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
         requestUrl += track_id;
 

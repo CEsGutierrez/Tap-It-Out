@@ -30,7 +30,7 @@ object QuizActivity {
 
         val aaTimesStrings = AABeats
 
-        var aaTimesMS = arrayListOf<Int>()
+        val aaTimesMS = arrayListOf<Int>()
 
         for (time in aaTimesStrings) {
             var temp = (time.toFloat())

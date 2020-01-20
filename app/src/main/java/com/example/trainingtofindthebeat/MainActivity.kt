@@ -9,8 +9,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-//    var THIS_IS_A_TEST = 1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,11 +19,9 @@ class MainActivity : AppCompatActivity() {
             hideConnectButton()
             SManualAPI.getToken()
         }
-
         //sets up all the other buttons' listeners which will determine the functional parts of the app
         setupListeners()
     }
-
 
     // function that actually launches the player activity
     fun launchPlayer () {
@@ -39,47 +35,36 @@ class MainActivity : AppCompatActivity() {
         training_selection.visibility = View.VISIBLE
         salsa_train.visibility = View.VISIBLE
         bachata_train.visibility = View.VISIBLE
-        tango_train.visibility = View.VISIBLE
+        rumba_train.visibility = View.VISIBLE
 
-        quiz_selection.visibility = View.VISIBLE
-        salsa_quiz.visibility = View.VISIBLE
-        bachata_quiz.visibility = View.VISIBLE
-        tango_quiz.visibility = View.VISIBLE
-
-        progress_button.visibility = View.VISIBLE
     }
 
     fun hideConnectButton() {
         connect_button.visibility = View.INVISIBLE
     }
 
-
-
-
-
-
-
     private fun setupListeners() {
 
         salsa_train.setOnClickListener {
-            SManualAPI.getPlaylistId()
-            SManualAPI.getTrackList()
-//            progress_button.setText(SManualAPI.getTrackAA(pickSalsaSong())
-//                .toString())
+            SManualAPI.GENRE = "SALSA"
+            SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana")
+            SManualAPI.SALSA_TRACKS = SManualAPI.getTrackList(SManualAPI.SALSA_PLAYLIST_ID)
             launchPlayer()
-
         }
 
+        bachata_train.setOnClickListener {
+            SManualAPI.GENRE = "BACHATA"
+            SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame")
+            SManualAPI.BACHATA_TRACKS = SManualAPI.getTrackList(SManualAPI.BACHATA_PLAYLIST_ID)
+            launchPlayer()
+        }
+        rumba_train.setOnClickListener {
+            SManualAPI.GENRE = "RUMBA"
+            SManualAPI.RUMBA_PLAYLIST_ID = SManualAPI.getPlaylistId("Rumba Colombiana")
+            SManualAPI.RUMBA_TRACKS = SManualAPI.getTrackList(SManualAPI.RUMBA_PLAYLIST_ID)
+            launchPlayer()
+        }
 
-
-        bachata_train.setOnClickListener {}
-        tango_train.setOnClickListener {}
-
-        salsa_quiz.setOnClickListener {}
-        bachata_quiz.setOnClickListener {}
-        tango_quiz.setOnClickListener {}
-
-        progress_button.setOnClickListener {}
     }
 
 }

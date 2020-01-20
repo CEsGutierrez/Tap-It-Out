@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_BACHATA_TRACK
+import com.example.trainingtofindthebeat.SManualAPI.CURRENT_RUMBA_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_SALSA_TRACK
-import com.example.trainingtofindthebeat.SManualAPI.CURRENT_TANGO_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.TEMPO
 import kotlinx.android.synthetic.main.activity_player.*
 
@@ -42,9 +42,9 @@ class PlayerActivity : AppCompatActivity() {
             i_am_a_test.setText("Bachata: $CURRENT_BACHATA_TRACK")
         }
         else {
-            CURRENT_TANGO_TRACK = SManualAPI.TANGO_MILONGA_TRACKS[0]
-            SManualAPI.getTrackTempo(CURRENT_TANGO_TRACK)
-            i_am_a_test.setText("Tango: $CURRENT_TANGO_TRACK")
+            CURRENT_RUMBA_TRACK = SManualAPI.RUMBA_TRACKS[0]
+            SManualAPI.getTrackTempo(CURRENT_RUMBA_TRACK)
+            i_am_a_test.setText("Rumba: $CURRENT_RUMBA_TRACK")
         }
     }
 
@@ -72,7 +72,7 @@ class PlayerActivity : AppCompatActivity() {
             return "spotify:track:${CURRENT_BACHATA_TRACK}"
         }
         else {
-            return "spotify:track:${CURRENT_TANGO_TRACK}"
+            return "spotify:track:${CURRENT_RUMBA_TRACK}"
         }
     }
 
@@ -152,7 +152,7 @@ class PlayerActivity : AppCompatActivity() {
             AA = SManualAPI.getTrackAA(CURRENT_BACHATA_TRACK)
         }
         else {
-            AA = SManualAPI.getTrackAA(CURRENT_TANGO_TRACK)
+            AA = SManualAPI.getTrackAA(CURRENT_RUMBA_TRACK)
         }
 
 
