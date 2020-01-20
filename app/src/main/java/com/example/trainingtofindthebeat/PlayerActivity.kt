@@ -5,36 +5,51 @@ import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trainingtofindthebeat.SManualAPI.CURRENT_BACHATA_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_SALSA_TRACK
+import com.example.trainingtofindthebeat.SManualAPI.CURRENT_TANGO_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.TEMPO
 import kotlinx.android.synthetic.main.activity_player.*
-import java.util.*
 
 
 class PlayerActivity : AppCompatActivity() {
 
 
-    var TIME_STAMP_LIST= arrayListOf<Int>()
+    var TIME_STAMP_LIST= arrayListOf<Int>() // slew of variables needed across the program
     var START_TIME = 0
     var END_TIME:Long = 0
     var BETTER_START_TIME:Long = 0
-    var FUNCTIONAL_AA  = arrayListOf<Int>()
-    var FUNCTIONAL_TAP  = arrayListOf<Int>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
         setupListeners()
-        CURRENT_SALSA_TRACK = ProgressActivity.pickSalsaSong()
-        SManualAPI.getTrackTempo()
+        trackAssigner()
+    }
+
+    fun trackAssigner() { // depending on the genre that has been chosen, this ensures that the
+        // right track is assigned, additionally that it's audio features are gotten and the beat
+        // for the song assigned
+        if (SManualAPI.GENRE == "SALSA") {
+            CURRENT_SALSA_TRACK = SManualAPI.SALSA_TRACKS[0]
+            SManualAPI.getTrackTempo(CURRENT_SALSA_TRACK)
+            i_am_a_test.setText("Salsa: $CURRENT_SALSA_TRACK")
+
+        }
+        else if (SManualAPI.GENRE == "BACHATA") {
+            CURRENT_BACHATA_TRACK = SManualAPI.BACHATA_TRACKS[0]
+            SManualAPI.getTrackTempo(CURRENT_BACHATA_TRACK)
+            i_am_a_test.setText("Bachata: $CURRENT_BACHATA_TRACK")
+        }
+        else {
+            CURRENT_TANGO_TRACK = SManualAPI.TANGO_MILONGA_TRACKS[0]
+            SManualAPI.getTrackTempo(CURRENT_TANGO_TRACK)
+            i_am_a_test.setText("Tango: $CURRENT_TANGO_TRACK")
+        }
     }
 
 
-    val standInArray = arrayListOf(0, 4000, 8000, 12000)
-
-
-    fun scaler() {
+    fun animationScaler() {
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 2f)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 2f)
 
@@ -49,15 +64,25 @@ class PlayerActivity : AppCompatActivity() {
 
     }
 
+    fun genreExtender(): String {
+        if(SManualAPI.GENRE == "SALSA") {
+            return "spotify:track:${CURRENT_SALSA_TRACK}"
+        }
+        else if (SManualAPI.GENRE == "BACHATA") {
+            return "spotify:track:${CURRENT_BACHATA_TRACK}"
+        }
+        else {
+            return "spotify:track:${CURRENT_TANGO_TRACK}"
+        }
+    }
+
 
     fun setupListeners() {
         start_button.setOnClickListener {
             recordSTART_TIME()
             recordBETTER_START_TIME()
-//            SServicePlayer.play("spotify:track:3whrwq4DtvucphBPUogRuJ")
-
-            SServicePlayer.play("spotify:track:${CURRENT_SALSA_TRACK}")
-            scaler()
+            SServicePlayer.play(genreExtender())
+            animationScaler()
         }
 
         stop_button.setOnClickListener {
@@ -115,35 +140,22 @@ class PlayerActivity : AppCompatActivity() {
         BETTER_START_TIME = System.currentTimeMillis()
     }
 
-    fun matchRanges(tapTimes: ArrayList<Int>, AATimes: ArrayList<Int>) {
-        var modifiedRange = arrayListOf<Int>()
-        var maxTime:Int
+    fun calculateScore():Double {
+        // gets the AA for the track in the appropriate genre, then converts its values to integers
+        // in MS
+        var AA:ArrayList<String>
 
-        if (tapTimes.size < AATimes.size)
-        {maxTime = tapTimes.get(index = tapTimes.size - 1)
-            println("Tap times is smaller, maxTime is $maxTime")
-            for (time in AATimes) {
-                while (time < maxTime) modifiedRange.add(time)
-            }
-            FUNCTIONAL_AA = modifiedRange
-
+        if (SManualAPI.GENRE == "SALSA") {
+            AA = SManualAPI.getTrackAA(CURRENT_SALSA_TRACK)
+        }
+        else if (SManualAPI.GENRE == "BACHATA") {
+            AA = SManualAPI.getTrackAA(CURRENT_BACHATA_TRACK)
         }
         else {
-            maxTime = AATimes.get(index = AATimes.size - 1)
-            println("Tap times is smaller, maxTime is $maxTime")
-            for (time in tapTimes) {
-                while (time < maxTime) modifiedRange.add(time)
-            }
-            FUNCTIONAL_TAP = modifiedRange
+            AA = SManualAPI.getTrackAA(CURRENT_TANGO_TRACK)
         }
-    }
 
 
-    fun calculateScore():Double {
-
-
-        // gets the AA for the track, then converts its values to integers in MS
-        val AA = SManualAPI.getTrackAA()
         val AATimesMS = QuizActivity.aaTimecCnverter(AA, stopTime = END_TIME,
             startTime = BETTER_START_TIME)
 
