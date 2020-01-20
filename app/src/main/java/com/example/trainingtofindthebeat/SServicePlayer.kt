@@ -5,6 +5,7 @@ import android.util.Log
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.android.appremote.api.SpotifyAppRemote.connect
 
 object SServicePlayer {
     private const val CLIENT_ID = BuildConfig.CLIENT_ID
@@ -32,15 +33,17 @@ object SServicePlayer {
                 handler(false)
             }
         }
-        SpotifyAppRemote.connect(context, connectionParams, connectionListener)
+        connect(context, connectionParams, connectionListener)
     }
 
      fun disconnect() {
         spotifyAppRemote?.playerApi?.pause()
+
          // TODO: figure out how to actually STOP what's going on here, not just pause it
 
-//        SpotifyAppRemote.disconnect(spotifyAppRemote)
-    }
+//         SpotifyAppRemote.disconnect(spotifyAppRemote)
+
+     }
 
 
     fun play(uri: String) {

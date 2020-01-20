@@ -23,6 +23,7 @@ object SManualAPI {
     var TANGO_MILONGA_TRACKS = arrayListOf<String>()
 
     var CURRENT_SALSA_TRACK = ""
+    var TEMPO:Long = 0
 
 
     fun getToken() {
@@ -126,13 +127,57 @@ object SManualAPI {
         }
         tracks.shuffle()
         SALSA_TRACKS = tracks
-
     }
 
-    fun getTrackAA(track_id: String): ArrayList<String> {
+    fun getTrackTempo() {
 
-        var track_id = track_id
-        CURRENT_SALSA_TRACK = track_id
+        var track_id =CURRENT_SALSA_TRACK
+        var requestUrl = "https://api.spotify.com/v1/audio-features/"
+        requestUrl += track_id;
+
+        val token = "Bearer $BEARER_TOKEN"
+        val headerMap = mutableMapOf<String, String>();
+        headerMap.put("Accept", "application/json");
+        headerMap.put("Content-Type", "application/json");
+        headerMap.put("Authorization", token);
+
+        var bpm:Long = 0
+
+        var finished = false;
+
+        runBlocking {
+            GlobalScope.launch {
+                val temp = get(url = requestUrl, headers = headerMap)
+                val tempo = temp.jsonObject.getString("tempo")
+                finished = true;
+                println("I am the raw tempo, am I really here? ")
+                println("I am the raw tempo, am I really here? ")
+                println("I am the raw tempo, am I really here? ")
+                println("$tempo")
+                bpm = 60000/(tempo.toFloat()).toInt().toLong()
+                println("$bpm")
+                val supertemp = bpm::class.java.toString()
+
+                println("$supertemp")
+                TEMPO = bpm
+            }
+        }
+        while (!finished) {
+            Thread.sleep(500);
+        }
+        println("*******I'm the tempo")
+        println("*******I'm the tempo")
+        println("*******I'm the tempo")
+        println("*******I'm the tempo")
+        println("*******I'm the tempo")
+        println("TEMPO = $bpm")
+        /*EMPO = bpm*/
+    }
+
+
+    fun getTrackAA(): ArrayList<String> {
+
+        var track_id = CURRENT_SALSA_TRACK
         var requestUrl = "https://api.spotify.com/v1/audio-analysis/"
         requestUrl += track_id;
 

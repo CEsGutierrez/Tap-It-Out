@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_SALSA_TRACK
+import com.example.trainingtofindthebeat.SManualAPI.TEMPO
 import kotlinx.android.synthetic.main.activity_player.*
 import java.util.*
 
@@ -20,11 +21,13 @@ class PlayerActivity : AppCompatActivity() {
     var FUNCTIONAL_AA  = arrayListOf<Int>()
     var FUNCTIONAL_TAP  = arrayListOf<Int>()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
         setupListeners()
-
+        CURRENT_SALSA_TRACK = ProgressActivity.pickSalsaSong()
+        SManualAPI.getTrackTempo()
     }
 
 
@@ -37,7 +40,10 @@ class PlayerActivity : AppCompatActivity() {
 
         val animator = ObjectAnimator.ofPropertyValuesHolder(animation, scaleX, scaleY)
 
-        animator.repeatCount = 20
+        animator.repeatCount = 80
+        val durationValue = TEMPO / 2 // accounts for expanding and contracting action in the
+        // annimation
+        animator.setDuration(durationValue)
         animator.repeatMode = ObjectAnimator.REVERSE
         animator.start()
 
@@ -48,8 +54,9 @@ class PlayerActivity : AppCompatActivity() {
         start_button.setOnClickListener {
             recordSTART_TIME()
             recordBETTER_START_TIME()
-            CURRENT_SALSA_TRACK = ProgressActivity.pickSalsaSong()
-            SServicePlayer.play("spotify:track:${SManualAPI.CURRENT_SALSA_TRACK}")
+//            SServicePlayer.play("spotify:track:3whrwq4DtvucphBPUogRuJ")
+
+            SServicePlayer.play("spotify:track:${CURRENT_SALSA_TRACK}")
             scaler()
         }
 
@@ -134,61 +141,32 @@ class PlayerActivity : AppCompatActivity() {
 
     fun calculateScore():Double {
 
-        println("I am the tests! * * * * * * * * ")
-        println("I am the tests! * * * * * * * * ")
-        println("I am the tests! * * * * * * * * ")
-        println("I am the tests! * * * * * * * * ")
-        println("I am the tests! * * * * * * * * ")
-        println("I am the tests! * * * * * * * * ")
 
         // gets the AA for the track, then converts its values to integers in MS
-        val AA = SManualAPI.getTrackAA(CURRENT_SALSA_TRACK)
-        println("I am AA: $AA")
-        println("I am End Time $END_TIME")
-        println("I am Start Time $START_TIME")
+        val AA = SManualAPI.getTrackAA()
         val AATimesMS = QuizActivity.aaTimecCnverter(AA, stopTime = END_TIME,
             startTime = BETTER_START_TIME)
-        println("I am AATimesMS: $AATimesMS")
-
-//        println("I am time stamp list $TIME_STAMP_LIST")
 
 //         calculates the tap times in integers in MS
         val TapTimesMS = QuizActivity.tapTimeConverter(TIME_STAMP_LIST, START_TIME)
-        println("I am TapTimesMS: $TapTimesMS")
 
         // removes introductory part of the song for both AA and Tap data(30 seconds)
         var functionalAA = QuizActivity.removeIntro(AATimesMS)
-        println("I am functionalAA $functionalAA")
         var functionalTap = QuizActivity.removeIntro(TapTimesMS)
-        println("I am functionalTap $functionalTap")
-
-        // Modified the appropriate range to match the size so that the least number of data
-        // points are being analyzed. Has to be here to actually touch these variables in a
-        // meaningful way.
-//        matchRanges(tapTimes = FUNCTIONAL_TAP, AATimes = FUNCTIONAL_AA)
-////        println("I am matched ranges $FUNCTIONAL_AA")
-////        println("I am matched ranges $FUNCTIONAL_TAP")
 
         // clusters the times into arrays that hold 10 seconds worth of information
         val clusteredAA = QuizActivity.groupTimes(functionalAA)
-        println("I am clustered AA: $clusteredAA")
         val clusteredTap = QuizActivity.groupTimes(functionalTap)
-        println("I am clustered Tap: $clusteredTap")
 
         // calculates the average differences in times of clustered times
         val averagedifferenceAA = QuizActivity.averageDiffInTimes(clusteredAA)
-        println("I am averagedifferenceAA: $averagedifferenceAA")
         val averageddifferenceTap = QuizActivity.averageDiffInTimes(clusteredTap)
-        println("I am averageddifferenceTap: $averageddifferenceTap")
 
         // compares the averages in times to compose a final score
         val finalScore = QuizActivity.compareAverages(averagedifferenceAA, averageddifferenceTap)
-        println("I am final score: $finalScore")
 
         return finalScore
-
     }
-
 }
 
 
