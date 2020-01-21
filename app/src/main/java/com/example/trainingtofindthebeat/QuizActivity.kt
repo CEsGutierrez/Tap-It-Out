@@ -5,7 +5,7 @@ import java.util.*
 
 object QuizActivity {
 
-
+    // calculates the tap times in integers in MS
     fun tapTimeConverter (timeStampList: ArrayList<Int>, startTime: Int) : ArrayList<Int> {
         val timeStampList = timeStampList
         val startTime = startTime
@@ -18,7 +18,8 @@ object QuizActivity {
         }
         return tapTimesMS
     }
-///////
+
+    // calculates the MS of the beats in the AA, in addition, it cuts the range of time analyzed to the time before the user hit "Stop"
     fun aaTimecCnverter(AABeats:ArrayList<String>, stopTime: Long, startTime: Long):ArrayList<Int> {
     // converts
         // stringy
@@ -41,6 +42,7 @@ object QuizActivity {
         return aaTimesMS
     }
 
+    // removes introductory part of the song for both AA and Tap data(30 seconds)
     fun removeIntro(timeList: ArrayList<Int>) : ArrayList<Int> { // non-destructively eliminates
         // the first 30 seconds of the song's worth of taps
         val i = 30000
@@ -51,6 +53,7 @@ object QuizActivity {
         return functionalTimes
     }
 
+    // clusters the times into arrays that hold 10 seconds worth of information
     fun groupTimes (functionalTimes: ArrayList<Int>):ArrayList<List<Int>> {
         var temp = mutableListOf<Int>()
         var groups = arrayListOf<List<Int>>()
@@ -75,6 +78,7 @@ object QuizActivity {
         return groups
     }
 
+    // calculates the average differences in times of clustered times
     fun averageDiffInTimes (groupedTimes: ArrayList<List<Int>>) : ArrayList<Float> {
         var averages = ArrayList<Float>()
         var average = 1.toFloat()
@@ -100,6 +104,7 @@ object QuizActivity {
         return averages
     }
 
+    // compares the averages in times to compose a final score
     fun compareAverages(AAAverageDifference : ArrayList<Float>, TapAverageDifference:
     ArrayList<Float>): Double {
 
@@ -120,5 +125,4 @@ object QuizActivity {
 
         return finalScore
     }
-
 }

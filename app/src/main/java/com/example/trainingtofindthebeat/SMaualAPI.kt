@@ -11,7 +11,7 @@ object SManualAPI {
     var BEARER_TOKEN = "" // Used as a variable for all other API calls. Assignment is triggered
     // through getToken function based on Connect Button onClickListener
 
-    var GENRE = ""
+    var GENRE = "" // Will be used to tell which genre the user is interacting with
 
     // will hold Spotify-owned playlist ID which will be the "approved" playlist
     var SALSA_PLAYLIST_ID = ""
@@ -22,18 +22,20 @@ object SManualAPI {
     var SALSA_TRACKS = arrayListOf<String>()
     var BACHATA_TRACKS = arrayListOf<String>()
 
+    // will hold the Spotify ID for the track currently in use
     var CURRENT_SALSA_TRACK = ""
     var CURRENT_BACHATA_TRACK = ""
 
+    // will hold the tempo for the current track
     var TEMPO:Long = 0
 
+    // initial API call to get a token for the session. It will expire within 60 minutes of this
+    // call, but the program it is deemed unlikely that the program will be used for longer
     fun getToken() {
-
         val id = BuildConfig.TOKEN_IDENTIFICATION // encoded client_id and client_secrets from
         // Spotify
 
         var response = "" // Used to parse response for just key
-
 
         var requestUrl = "https://accounts.spotify.com/api/token?grant_type=client_credentials"
         val headerMap = mutableMapOf<String, String>();
@@ -54,8 +56,9 @@ object SManualAPI {
         }
     }
 
-    fun getPlaylistId(searchKeyword: String): String { // gets the playlist ID for "whatever
-        // playlist password was passed into it "
+    // API call to get the playlist ID for whichever playlist keyword is passed into it based
+    // on the selected genre
+    fun getPlaylistId(searchKeyword: String): String {
 
         val searchKeyword = searchKeyword
         val idealOwner = "spotify"
@@ -91,6 +94,7 @@ object SManualAPI {
         return playlistID
     }
 
+    // API call to get a list of tracks that are in the desired playlist
     fun getTrackList(playlist_id: String): ArrayList<String> {
 
         var playlist_id = playlist_id
@@ -129,6 +133,7 @@ object SManualAPI {
 
     }
 
+    // API call to get the audio features of a track, will be used for the tempo
     fun getTrackTempo(track_id: String) {
 
         var track_id = track_id
@@ -160,6 +165,7 @@ object SManualAPI {
         }
     }
 
+    // API call to get the audio analysis of a track, will be used for the beats analysis
     fun getTrackAA(track_id: String): ArrayList<String> {
 
         var track_id = track_id
@@ -192,5 +198,4 @@ object SManualAPI {
         }
         return beatsArray;
     }
-
 }

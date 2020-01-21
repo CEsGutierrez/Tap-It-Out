@@ -7,7 +7,10 @@ import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.SpotifyAppRemote.connect
 
+// This object runs the Spotify SDK, which runs the playback functions
+
 object SServicePlayer {
+
     private const val CLIENT_ID = BuildConfig.CLIENT_ID
     private const val REDIRECT_URI = "com.example.trainingtofindthebeat://"
 
@@ -37,19 +40,15 @@ object SServicePlayer {
     }
 
      fun disconnect() {
-        spotifyAppRemote?.playerApi?.pause()
-
-         // TODO: figure out how to actually STOP what's going on here, not just pause it
-
 //         SpotifyAppRemote.disconnect(spotifyAppRemote)
 
-     }
+//        .disconnect function is not supported by spotifyAppRemote. Possibly due to being in
+//        "beta" thus .pause call is used instead
 
+        spotifyAppRemote?.playerApi?.pause()
+     }
 
     fun play(uri: String) {
         spotifyAppRemote?.playerApi?.play(uri)
     }
-
-
-
 }

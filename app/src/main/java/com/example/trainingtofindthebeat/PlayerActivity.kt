@@ -16,7 +16,8 @@ import kotlinx.android.synthetic.main.activity_player.*
 
 class PlayerActivity : AppCompatActivity() {
 
-    var TIME_STAMP_LIST= arrayListOf<Int>() // slew of variables needed across the program
+    // slew of variables needed across the program
+    var TIME_STAMP_LIST= arrayListOf<Int>()
     var START_TIME = 0
     var END_TIME:Long = 0
     var BETTER_START_TIME:Long = 0
@@ -30,6 +31,7 @@ class PlayerActivity : AppCompatActivity() {
         setupListeners()
         trackAssigner()
     }
+
 
     fun trackAssigner() { // depending on the genre that has been chosen, this ensures that the
         // right track is assigned, additionally that it's audio features are gotten and the beat
@@ -55,20 +57,24 @@ class PlayerActivity : AppCompatActivity() {
     }
 
 
-    fun animationScaler() {
+    fun animationScaler() { // controlls the music note there to help the user get started at the
+        // start of the song
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 2f)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 2f)
 
         val animator = ObjectAnimator.ofPropertyValuesHolder(animation, scaleX, scaleY)
 
-        animator.repeatCount = 80
-        val durationValue = TEMPO / 2 // accounts for expanding and contracting action in the
-        // annimation
+        // plays for about 25 "pulses" hopefully long enough for the intro to be over and the user to get settled
+        animator.repeatCount = 50
+
+        // accounts for expanding and contracting action in the annimation
+        val durationValue = TEMPO / 2
         animator.setDuration(durationValue)
         animator.repeatMode = ObjectAnimator.REVERSE
         animator.start()
     }
 
+    // helps player remain modular by passing into it the current working track
     fun genreExtender(): String {
         if(SManualAPI.GENRE == "SALSA") {
             return "spotify:track:${CURRENT_SALSA_TRACK}"
@@ -78,11 +84,10 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-
+    // triggers start and stop functions as well as their companions
     fun setupListeners() {
         start_button.setOnClickListener {
             recordSTART_TIME()
-            recordBETTER_START_TIME()
             SServicePlayer.play(genreExtender())
             animationScaler()
         }
@@ -90,7 +95,6 @@ class PlayerActivity : AppCompatActivity() {
         stop_button.setOnClickListener {
             recordEND_TIME()
             val score = calculateScore()
-
             displayStars(score)
             SServicePlayer.disconnect()
         }
@@ -100,6 +104,7 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    // displays a different number of stars based score calculations
     fun displayStars(score: Double) {
         score_area.visibility = View.VISIBLE
         if (score < 20) {
@@ -129,38 +134,33 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    // records the time of each button press to the tap button and adds it to the collection of taps
     fun recordTime() {
         var time = System.currentTimeMillis()
         var now = time.toLong().toInt()
-        addTimeToArray(now)
-        }
-
-    fun addTimeToArray(time: Int ) {
         var length = TIME_STAMP_LIST.size
         if (length == 0)
-            TIME_STAMP_LIST.add(0, time)
+            TIME_STAMP_LIST.add(0, now)
         else
-            TIME_STAMP_LIST.add(length, time)
-    }
+            TIME_STAMP_LIST.add(length, now)
+        }
 
+    // records the theoretical start of the song playing
     fun recordSTART_TIME() {
         val time = System.currentTimeMillis()
-        START_TIME = time.toInt()
+        BETTER_START_TIME = time // accurate to Epoch
+        START_TIME = time.toInt() // suitable for Tap time calculations
     }
 
+    // records when the player presses "Stop" button
     fun recordEND_TIME() {
         END_TIME = System.currentTimeMillis()
     }
 
-    fun recordBETTER_START_TIME() {
-        BETTER_START_TIME = System.currentTimeMillis()
-    }
-
     fun calculateScore():Double {
-        // gets the AA for the track in the appropriate genre, then converts its values to integers
-        // in MS
+        // this section gets the Audio Analysis (AA) for the working track of the genre being
+        // currently used.
         var AA:ArrayList<String>
-
         if (SManualAPI.GENRE == "SALSA") {
             AA = SManualAPI.getTrackAA(CURRENT_SALSA_TRACK)
         }
@@ -168,11 +168,12 @@ class PlayerActivity : AppCompatActivity() {
             AA = SManualAPI.getTrackAA(CURRENT_BACHATA_TRACK)
         }
 
-
+        // calculates the MS of the beats in the AA, in addition, it cuts the range of time
+        // analyzed to the time before the user hit "Stop"
         val AATimesMS = QuizActivity.aaTimecCnverter(AA, stopTime = END_TIME,
             startTime = BETTER_START_TIME)
 
-//         calculates the tap times in integers in MS
+        // calculates the tap times in integers in MS
         val TapTimesMS = QuizActivity.tapTimeConverter(TIME_STAMP_LIST, START_TIME)
 
         // removes introductory part of the song for both AA and Tap data(30 seconds)
@@ -193,5 +194,3 @@ class PlayerActivity : AppCompatActivity() {
         return finalScore
     }
 }
-
-

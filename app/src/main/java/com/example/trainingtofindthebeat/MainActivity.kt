@@ -25,21 +25,20 @@ class MainActivity : AppCompatActivity() {
         setupListeners()
     }
 
-    // function that actually launches the player activity
-    fun launchPlayer () {
+    fun launchPlayer () {// function that actually launches the player activity
         SServicePlayer.connect(this) {
             val intent = Intent(this, PlayerActivity::class.java)
             startActivity(intent)
         }
     }
 
-    fun showMainButtons() {
+
+    fun showMainButtons() {    // toggles the visibility and clickability (?) of the "Salsa" and "Bachata" buttons so that the flow is controlled
         training_selection.visibility = View.VISIBLE
         salsa_train.visibility = View.VISIBLE
         salsa_train.setEnabled(true)
         bachata_train.visibility = View.VISIBLE
         bachata_train.setEnabled(true)
-
     }
 
     fun hideConnectButton() {
@@ -47,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         connect_button.setEnabled(false)
     }
 
+    // controlls the actions that happen based on button clicks. Notice that if songs for that
+    // genre have already been obtained, the additional API calls are skipped and the populated list
+    // is used instead.
     private fun setupListeners() {
         salsa_train.setOnClickListener {
             SManualAPI.GENRE = "SALSA"
