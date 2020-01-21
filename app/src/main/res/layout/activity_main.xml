@@ -88,27 +88,19 @@
 
         <Button
             android:id="@+id/salsa_train"
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="match_parent"
             android:text="Salsa"
-            android:visibility="invisible"/>
-
+            android:visibility="invisible"
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/bachata_train"
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:text="Bachata"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/rumba_train"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Rumba"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            android:enabled="false"/>
 
     </LinearLayout>
 

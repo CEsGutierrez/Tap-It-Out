@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainingtofindthebeat.SManualAPI.BACHATA_TRACKS
-import com.example.trainingtofindthebeat.SManualAPI.RUMBA_TRACKS
 import com.example.trainingtofindthebeat.SManualAPI.SALSA_TRACKS
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -37,13 +36,15 @@ class MainActivity : AppCompatActivity() {
     fun showMainButtons() {
         training_selection.visibility = View.VISIBLE
         salsa_train.visibility = View.VISIBLE
+        salsa_train.setEnabled(true)
         bachata_train.visibility = View.VISIBLE
-        rumba_train.visibility = View.VISIBLE
+        bachata_train.setEnabled(true)
 
     }
 
     fun hideConnectButton() {
         connect_button.visibility = View.INVISIBLE
+        connect_button.setEnabled(false)
     }
 
     private fun setupListeners() {
@@ -68,18 +69,5 @@ class MainActivity : AppCompatActivity() {
             }
             launchPlayer()
         }
-        rumba_train.setOnClickListener {
-            SManualAPI.GENRE = "RUMBA"
-            if (RUMBA_TRACKS.size < 0) {
-                SManualAPI.RUMBA_PLAYLIST_ID = SManualAPI.getPlaylistId("Rumba Colombiana")
-                RUMBA_TRACKS = SManualAPI.getTrackList(SManualAPI.RUMBA_PLAYLIST_ID)
-            }
-            else {
-                RUMBA_TRACKS.shuffle()
-            }
-            launchPlayer()
-        }
-
     }
-
 }

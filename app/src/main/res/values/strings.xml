@@ -3,22 +3,10 @@
     <string name="tap_press">Tap here</string>
     <string name="salsa">SALSA</string>
     <string name="bachata">Bachata</string>
-    <string name="rumba">Rumba</string>
 
     <string name="tap_it_out">tap it out</string>
 
-
-
-
-    <string name="app_name">Training to find the beat</string>
-    <string name="app_title">Train to find the beat!</string>
-    <string name="app_description">An app to help you find the beat</string>
-    <string name="quiz_statement">To test yourself, pick a genre: </string>
-    <string name="train_statement">To do some training, pick a genre: </string>
-
-
-
-
-
+    <string name="app_name"></string>
+    <string name="app_description"></string>
 
 </resources>

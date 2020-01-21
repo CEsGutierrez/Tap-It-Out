@@ -5,17 +5,16 @@ import android.animation.PropertyValuesHolder
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_BACHATA_TRACK
-import com.example.trainingtofindthebeat.SManualAPI.CURRENT_RUMBA_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_SALSA_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.TEMPO
 import kotlinx.android.synthetic.main.activity_player.*
 
 
 class PlayerActivity : AppCompatActivity() {
-
 
     var TIME_STAMP_LIST= arrayListOf<Int>() // slew of variables needed across the program
     var START_TIME = 0
@@ -25,6 +24,9 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+        Toast.makeText(this, "The blue note will help you and the song get settled.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Tap the grey button to the beat.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "When you stop, we'll tell you how you did!", Toast.LENGTH_LONG).show()
         setupListeners()
         trackAssigner()
     }
@@ -40,7 +42,6 @@ class PlayerActivity : AppCompatActivity() {
 
             CURRENT_SALSA_TRACK = SManualAPI.SALSA_TRACKS[0]
             SManualAPI.getTrackTempo(CURRENT_SALSA_TRACK)
-
         }
         else if (SManualAPI.GENRE == "BACHATA") {
             // Changes the view appearance to yellow background, congas, and text "Bachata"
@@ -50,16 +51,6 @@ class PlayerActivity : AppCompatActivity() {
 
             CURRENT_BACHATA_TRACK = SManualAPI.BACHATA_TRACKS[0]
             SManualAPI.getTrackTempo(CURRENT_BACHATA_TRACK)
-        }
-        else {
-            // Changes the view appearance to blue background, guitar, and text "Rumba"
-            instrument_1.setImageDrawable(ContextCompat.getDrawable(applicationContext, R
-                .drawable.final_guitar))
-            activity_announcer.setBackgroundColor(Color.parseColor("#0022BF"))
-            activity_ann.setText("RUMBA")
-
-            CURRENT_RUMBA_TRACK = SManualAPI.RUMBA_TRACKS[0]
-            SManualAPI.getTrackTempo(CURRENT_RUMBA_TRACK)
         }
     }
 
@@ -76,18 +67,14 @@ class PlayerActivity : AppCompatActivity() {
         animator.setDuration(durationValue)
         animator.repeatMode = ObjectAnimator.REVERSE
         animator.start()
-
     }
 
     fun genreExtender(): String {
         if(SManualAPI.GENRE == "SALSA") {
             return "spotify:track:${CURRENT_SALSA_TRACK}"
         }
-        else if (SManualAPI.GENRE == "BACHATA") {
-            return "spotify:track:${CURRENT_BACHATA_TRACK}"
-        }
         else {
-            return "spotify:track:${CURRENT_RUMBA_TRACK}"
+            return "spotify:track:${CURRENT_BACHATA_TRACK}"
         }
     }
 
@@ -103,8 +90,7 @@ class PlayerActivity : AppCompatActivity() {
         stop_button.setOnClickListener {
             recordEND_TIME()
             val score = calculateScore()
-//            Toast.makeText(this, "Hi there, hang on for your score: ", Toast
-//                .LENGTH_LONG).show()
+
             displayStars(score)
             SServicePlayer.disconnect()
         }
@@ -143,10 +129,6 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
     fun recordTime() {
         var time = System.currentTimeMillis()
         var now = time.toLong().toInt()
@@ -182,11 +164,8 @@ class PlayerActivity : AppCompatActivity() {
         if (SManualAPI.GENRE == "SALSA") {
             AA = SManualAPI.getTrackAA(CURRENT_SALSA_TRACK)
         }
-        else if (SManualAPI.GENRE == "BACHATA") {
-            AA = SManualAPI.getTrackAA(CURRENT_BACHATA_TRACK)
-        }
         else {
-            AA = SManualAPI.getTrackAA(CURRENT_RUMBA_TRACK)
+            AA = SManualAPI.getTrackAA(CURRENT_BACHATA_TRACK)
         }
 
 

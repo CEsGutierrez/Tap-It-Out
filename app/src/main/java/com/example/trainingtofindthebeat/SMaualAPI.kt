@@ -16,22 +16,16 @@ object SManualAPI {
     // will hold Spotify-owned playlist ID which will be the "approved" playlist
     var SALSA_PLAYLIST_ID = ""
     var BACHATA_PLAYLIST_ID = ""
-    var RUMBA_PLAYLIST_ID = ""
-
 
     // will hold randomized, curated track IDs for tracks from approved playlist. Randomization
     // makes it easier to pick from these track collections later.
     var SALSA_TRACKS = arrayListOf<String>()
     var BACHATA_TRACKS = arrayListOf<String>()
-    var RUMBA_TRACKS = arrayListOf<String>()
 
     var CURRENT_SALSA_TRACK = ""
     var CURRENT_BACHATA_TRACK = ""
-    var CURRENT_RUMBA_TRACK = ""
-
 
     var TEMPO:Long = 0
-
 
     fun getToken() {
 
