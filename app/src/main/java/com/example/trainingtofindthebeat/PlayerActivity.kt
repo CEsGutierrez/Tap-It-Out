@@ -94,9 +94,16 @@ class PlayerActivity : AppCompatActivity() {
 
         stop_button.setOnClickListener {
             recordEND_TIME()
-            val score = calculateScore()
-            displayStars(score)
-            SServicePlayer.disconnect()
+            if (END_TIME - BETTER_START_TIME < 30000) {
+                score_area.visibility = View.VISIBLE
+                Toast.makeText(this, "You didn't tap for very long. Could you, like, do better?", Toast.LENGTH_LONG).show()
+                SServicePlayer.disconnect()
+            }
+            else {
+                val score = calculateScore()
+                displayStars(score)
+                SServicePlayer.disconnect()
+            }
         }
 
         tap.setOnClickListener {
