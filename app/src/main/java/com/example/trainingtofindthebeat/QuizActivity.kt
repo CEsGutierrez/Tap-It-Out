@@ -121,9 +121,4 @@ object QuizActivity {
         return finalScore
     }
 
-
-
-
-
-
 }

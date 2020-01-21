@@ -2,9 +2,11 @@ package com.example.trainingtofindthebeat
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_BACHATA_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_RUMBA_TRACK
 import com.example.trainingtofindthebeat.SManualAPI.CURRENT_SALSA_TRACK
@@ -31,20 +33,33 @@ class PlayerActivity : AppCompatActivity() {
         // right track is assigned, additionally that it's audio features are gotten and the beat
         // for the song assigned
         if (SManualAPI.GENRE == "SALSA") {
+            // Changes the view appearance to red background, trombone, and text "Salsa"
+            instrument_1.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.trombone))
+            activity_announcer.setBackgroundColor(Color.parseColor("#CB0D0F"))
+            activity_ann.setText("SALSA")
+
             CURRENT_SALSA_TRACK = SManualAPI.SALSA_TRACKS[0]
             SManualAPI.getTrackTempo(CURRENT_SALSA_TRACK)
-            i_am_a_test.setText("Salsa: $CURRENT_SALSA_TRACK")
 
         }
         else if (SManualAPI.GENRE == "BACHATA") {
+            // Changes the view appearance to yellow background, congas, and text "Bachata"
+            instrument_1.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.congas))
+            activity_announcer.setBackgroundColor(Color.parseColor("#F8D541"))
+            activity_ann.setText("BACHATA")
+
             CURRENT_BACHATA_TRACK = SManualAPI.BACHATA_TRACKS[0]
             SManualAPI.getTrackTempo(CURRENT_BACHATA_TRACK)
-            i_am_a_test.setText("Bachata: $CURRENT_BACHATA_TRACK")
         }
         else {
+            // Changes the view appearance to blue background, guitar, and text "Rumba"
+            instrument_1.setImageDrawable(ContextCompat.getDrawable(applicationContext, R
+                .drawable.final_guitar))
+            activity_announcer.setBackgroundColor(Color.parseColor("#0022BF"))
+            activity_ann.setText("RUMBA")
+
             CURRENT_RUMBA_TRACK = SManualAPI.RUMBA_TRACKS[0]
             SManualAPI.getTrackTempo(CURRENT_RUMBA_TRACK)
-            i_am_a_test.setText("Rumba: $CURRENT_RUMBA_TRACK")
         }
     }
 
@@ -100,18 +115,37 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     fun displayStars(score: Double) {
+        score_area.visibility = View.VISIBLE
         if (score < 20) {
             star_1.visibility = View.VISIBLE
             star_2.visibility = View.VISIBLE
             star_3.visibility = View.VISIBLE
+            star_4.visibility = View.VISIBLE
+            star_5.visibility = View.VISIBLE
+        }
+        else if (score < 50) {
+            star_1.visibility = View.VISIBLE
+            star_2.visibility = View.VISIBLE
+            star_3.visibility = View.VISIBLE
+            star_4.visibility = View.VISIBLE
         }
         else if (score < 100) {
             star_1.visibility = View.VISIBLE
             star_2.visibility = View.VISIBLE
+            star_3.visibility = View.VISIBLE
         }
-        else
-        {star_1.visibility = View.VISIBLE}
+        else if (score < 200) {
+            star_1.visibility = View.VISIBLE
+            star_2.visibility = View.VISIBLE
+        }
+        else {
+            star_1.visibility = View.VISIBLE
+        }
     }
+
+
+
+
 
     fun recordTime() {
         var time = System.currentTimeMillis()

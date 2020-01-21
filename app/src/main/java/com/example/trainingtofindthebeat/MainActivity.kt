@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trainingtofindthebeat.SManualAPI.BACHATA_TRACKS
+import com.example.trainingtofindthebeat.SManualAPI.RUMBA_TRACKS
+import com.example.trainingtofindthebeat.SManualAPI.SALSA_TRACKS
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -44,24 +47,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-
         salsa_train.setOnClickListener {
             SManualAPI.GENRE = "SALSA"
-            SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana")
-            SManualAPI.SALSA_TRACKS = SManualAPI.getTrackList(SManualAPI.SALSA_PLAYLIST_ID)
+            if (SALSA_TRACKS.size < 1) {
+                SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana")
+                SALSA_TRACKS = SManualAPI.getTrackList(SManualAPI.SALSA_PLAYLIST_ID)
+            }
+            else {SALSA_TRACKS.shuffle()}
             launchPlayer()
         }
 
         bachata_train.setOnClickListener {
             SManualAPI.GENRE = "BACHATA"
-            SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame")
-            SManualAPI.BACHATA_TRACKS = SManualAPI.getTrackList(SManualAPI.BACHATA_PLAYLIST_ID)
+            if (BACHATA_TRACKS.size < 1) {
+                SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame")
+                BACHATA_TRACKS = SManualAPI.getTrackList(SManualAPI.BACHATA_PLAYLIST_ID)
+            }
+            else {
+                BACHATA_TRACKS.shuffle()
+            }
             launchPlayer()
         }
         rumba_train.setOnClickListener {
             SManualAPI.GENRE = "RUMBA"
-            SManualAPI.RUMBA_PLAYLIST_ID = SManualAPI.getPlaylistId("Rumba Colombiana")
-            SManualAPI.RUMBA_TRACKS = SManualAPI.getTrackList(SManualAPI.RUMBA_PLAYLIST_ID)
+            if (RUMBA_TRACKS.size < 0) {
+                SManualAPI.RUMBA_PLAYLIST_ID = SManualAPI.getPlaylistId("Rumba Colombiana")
+                RUMBA_TRACKS = SManualAPI.getTrackList(SManualAPI.RUMBA_PLAYLIST_ID)
+            }
+            else {
+                RUMBA_TRACKS.shuffle()
+            }
             launchPlayer()
         }
 

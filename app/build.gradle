@@ -21,6 +21,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "CLIENT_ID", apikeyProperties['CLIENT_ID'])
         buildConfigField("String", "TOKEN_IDENTIFICATION", apikeyProperties['TOKEN_IDENTIFICATION'])
+        vectorDrawables {
+            useSupportLibrary = "true"
+        }
     }
     buildTypes {
         release {

@@ -7,143 +7,200 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/activity_announcer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="338dp">
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="1dp"
+        android:background="#CB0D0F">
 
         <TextView
             android:id="@+id/activity_ann"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/salsa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"/>
+
+        <ImageView
+            android:id="@+id/instrument_1"
+            android:layout_width="145dp"
+            android:layout_height="128dp"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/trombone"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="406dp"
+            android:background="@android:color/transparent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/start_stop_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_announcer">
+
+        <Button
+            android:id="@+id/start_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Start"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/stop_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/pulse_area"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/start_stop_buttons"
+        tools:layout_editor_absoluteX="0dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/pulse_background"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
-            android:text="Activity announcer"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/note_background_shape"
+            app:layout_constraintBottom_toTopOf="@+id/tap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/start_stop_buttons"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/genre_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:text="Genre Info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/song_title_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:text="Song Title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genre_info" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="32dp">
-            <Button
-                android:id="@+id/start_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start"
-                android:visibility="visible"/>
-            <Button
-                android:id="@+id/stop_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stop"
-                android:visibility="visible"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#ECE4C5">
             <ImageView
                 android:id="@+id/animation"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:background="#FF9D56"
+                android:layout_gravity="center|center_horizontal"
+                android:background="@android:color/transparent"
                 android:visibility="visible"
-                app:srcCompat="@drawable/sound" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/i_am_a_test"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:text="Boo"/>
-
-        <Button
-            android:id="@+id/tap"
-            android:layout_width="200dp"
-            android:layout_height="117dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="16dp"
-            android:background="#E7E7E7"
-            android:gravity="center_horizontal"
-            android:text="Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.54"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/animation" />
-
-
-        <LinearLayout
-            android:id="@+id/score_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tap">
-
-            <ImageView
-                android:id="@+id/star_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/star"
-                android:visibility="invisible"/>
-
-            <ImageView
-                android:id="@+id/star_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/star"
-                android:visibility="invisible"/>
-
-            <ImageView
-                android:id="@+id/star_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/star"
-                android:visibility="invisible"/>
+                app:srcCompat="@drawable/im_a_note"
+                tools:ignore="VectorDrawableCompat"
+                android:layout_marginStart="10dp"
+                />
         </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/button_area"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/pulse_area"
+        tools:layout_editor_absoluteX="0dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/tap"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/press_button_background_shape"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pulse_area"
+            android:drawableTop="@drawable/press_icon_2"
+            android:paddingTop="30dp"/>
 
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/score_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/score_background_shape"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/button_area"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/star_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/gold_star"
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/star_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/gold_star"
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/star_3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/gold_star"
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/star_4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/gold_star"
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/star_5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/gold_star"
+            android:background="@android:color/transparent"/>
+
+
+
+
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

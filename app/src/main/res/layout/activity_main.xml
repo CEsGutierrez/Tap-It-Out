@@ -6,29 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/title_text"
         android:layout_width="191dp"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="56dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/app_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="TAP IT OUT"
+        android:textSize="30dp"
+
+        />
 
 
-    <TextView
-        android:id="@+id/description_text"
-        android:layout_width="192dp"
-        android:layout_height="65dp"
+    <Button
+        android:id="@+id/connect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text="@string/app_description"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="16dp"
+        android:text="Let's get started!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
@@ -42,19 +46,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/white_vinyl"/>
 
+
+    <TextView
+        android:id="@+id/description_text"
+        android:layout_width="228dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="116dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="@string/app_description"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
+
     <TextView
         android:id="@+id/training_selection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/train_statement"
+        android:text="Pick a genre: "
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description_text"
-        android:visibility="invisible"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/description_text" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -72,38 +90,28 @@
             android:id="@+id/salsa_train"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/salsa"
+            android:text="Salsa"
             android:visibility="invisible"/>
+
 
         <Button
             android:id="@+id/bachata_train"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/bachata"
-            android:visibility="invisible"/>
+            android:text="Bachata"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/rumba_train"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/rumba"
+            android:text="Rumba"
             android:visibility="invisible"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/connect_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="16dp"
-        android:text="Let's get started!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
