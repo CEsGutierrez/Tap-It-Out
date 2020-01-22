@@ -53,8 +53,7 @@ class MainActivity : AppCompatActivity() {
             salsa_train.setOnClickListener {
                 SManualAPI.GENRE = "SALSA"
                 if (SALSA_TRACKS.size < 1) {
-    //                SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana") // demo
-    //                only
+                    SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana")
                 SALSA_TRACKS = SManualAPI.getTrackList(SManualAPI.SALSA_PLAYLIST_ID)
             }
             else {SALSA_TRACKS.shuffle()}
@@ -64,8 +63,7 @@ class MainActivity : AppCompatActivity() {
         bachata_train.setOnClickListener {
             SManualAPI.GENRE = "BACHATA"
             if (BACHATA_TRACKS.size < 1) {
-//                SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame") // demo
-//                only
+                SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame")
                 BACHATA_TRACKS = SManualAPI.getTrackList(SManualAPI.BACHATA_PLAYLIST_ID)
             }
             else {
