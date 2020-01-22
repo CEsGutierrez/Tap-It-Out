@@ -19,8 +19,11 @@ object SManualAPI {
 
     // will hold randomized, curated track IDs for tracks from approved playlist. Randomization
     // makes it easier to pick from these track collections later.
-    var SALSA_TRACKS = arrayListOf<String>()
-    var BACHATA_TRACKS = arrayListOf<String>()
+
+    // for demo purposes, track IDs are hard coded. they're left as
+    // "var" in order to allow for a shuffle
+    var SALSA_TRACKS = arrayListOf<String>("3whrwq4DtvucphBPUogRuJ", "1ThRQyaQ01tscygb9IZVH6", "0rnAOATXvNSAgkPB1cplP7", "1mpeG0e0lTxMRvgjSLrhnR", "0NLreGlwATS3wQOtDDtO2H", "21d6EkqWaoA2hPDBUp2u8H")
+    var BACHATA_TRACKS = arrayListOf<String>("2dy3TKVDEbIeWxeIb8JWqZ", "2JMXEFjheY0ggD0g05fMk4", "0wDEs6WvqDHq4XJZC0dHhO", "5bxktlQJeQlRzJG8qsQ02h", "3nHDtotJHBWDoCGHViM0gD", "0o9pMabPrdR6ULWTD3eydx")
 
     // will hold the Spotify ID for the track currently in use
     var CURRENT_SALSA_TRACK = ""

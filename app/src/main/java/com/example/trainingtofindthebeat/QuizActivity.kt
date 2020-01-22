@@ -45,7 +45,8 @@ object QuizActivity {
     // removes introductory part of the song for both AA and Tap data(30 seconds)
     fun removeIntro(timeList: ArrayList<Int>) : ArrayList<Int> { // non-destructively eliminates
         // the first 30 seconds of the song's worth of taps
-        val i = 30000
+        // val i = 30000
+        val i = 15000 // changed to 15 seconds for demo purposes (demo only)
         var functionalTimes = arrayListOf<Int>()
         for (time in timeList) {
             if (time > i ) {functionalTimes.add(time)}

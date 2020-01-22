@@ -94,7 +94,9 @@ class PlayerActivity : AppCompatActivity() {
 
         stop_button.setOnClickListener {
             recordEND_TIME()
-            if (END_TIME - BETTER_START_TIME < 30000) {
+//          if (END_TIME - BETTER_START_TIME < 30000) {
+            if (END_TIME - BETTER_START_TIME < 15000) { // for demo purposes, the intro time is
+                // reduced to 15 seconds before a score is calculated
                 score_area.visibility = View.VISIBLE
                 Toast.makeText(this, "You didn't tap for very long. Could you, like, do better?", Toast.LENGTH_LONG).show()
                 SServicePlayer.disconnect()

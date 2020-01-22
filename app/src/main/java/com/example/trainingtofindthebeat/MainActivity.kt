@@ -43,17 +43,18 @@ class MainActivity : AppCompatActivity() {
 
     fun hideConnectButton() {
         connect_button.visibility = View.INVISIBLE
-        connect_button.setEnabled(false)
-    }
+            connect_button.setEnabled(false)
+        }
 
-    // controlls the actions that happen based on button clicks. Notice that if songs for that
-    // genre have already been obtained, the additional API calls are skipped and the populated list
-    // is used instead.
-    private fun setupListeners() {
-        salsa_train.setOnClickListener {
-            SManualAPI.GENRE = "SALSA"
-            if (SALSA_TRACKS.size < 1) {
-                SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana")
+        // controlls the actions that happen based on button clicks. Notice that if songs for that
+        // genre have already been obtained, the additional API calls are skipped and the populated list
+        // is used instead.
+        private fun setupListeners() {
+            salsa_train.setOnClickListener {
+                SManualAPI.GENRE = "SALSA"
+                if (SALSA_TRACKS.size < 1) {
+    //                SManualAPI.SALSA_PLAYLIST_ID = SManualAPI.getPlaylistId("Salsa Cubana") // demo
+    //                only
                 SALSA_TRACKS = SManualAPI.getTrackList(SManualAPI.SALSA_PLAYLIST_ID)
             }
             else {SALSA_TRACKS.shuffle()}
@@ -63,7 +64,8 @@ class MainActivity : AppCompatActivity() {
         bachata_train.setOnClickListener {
             SManualAPI.GENRE = "BACHATA"
             if (BACHATA_TRACKS.size < 1) {
-                SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame")
+//                SManualAPI.BACHATA_PLAYLIST_ID = SManualAPI.getPlaylistId("Bachateame") // demo
+//                only
                 BACHATA_TRACKS = SManualAPI.getTrackList(SManualAPI.BACHATA_PLAYLIST_ID)
             }
             else {
