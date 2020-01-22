@@ -7,7 +7,7 @@ How to Run:
 * Clone the repository
 * Register the app with Spotify to get a Client ID: https://developer.spotify.com/documentation/general/guides/app-settings/
 * Create a file named "apikey.properties" Add to it your Client ID as follows, filling in your ID where indicated:
-    CLIENT_ID = "<Your client ID here>"
+    CLIENT_ID = "<Your_client_ID_here>"
 * You will need Spotify App to run on your emulator or physical device, including a valid login
 
 Author(s):
